@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。">
+<meta name="keywords" content="Mysql,chatGPT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拷打chatGPT获得一篇Mysql的explain详解">
+<meta property="og:url" content="https://rosinanteplusssss.github.io/2023/03/02/拷打chatGPT获得一篇Mysql的explain详解/index.html">
+<meta property="og:site_name" content="日復一日">
+<meta property="og:description" content="虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2023-03-06T07:26:21.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拷打chatGPT获得一篇Mysql的explain详解">
+<meta name="twitter:description" content="虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://rosinanteplusssss.github.io/2023/03/02/拷打chatGPT获得一篇Mysql的explain详解/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>拷打chatGPT获得一篇Mysql的explain详解 | 日復一日</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">日復一日</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">當一個堅持的人</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rosinanteplusssss.github.io/2023/03/02/拷打chatGPT获得一篇Mysql的explain详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yellow">
+      <meta itemprop="description" content="碼農">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日復一日">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">拷打chatGPT获得一篇Mysql的explain详解
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-03-02 21:02:12" itemprop="dateCreated datePublished" datetime="2023-03-02T21:02:12+08:00">2023-03-02</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2023-03-06 15:26:21" itemprop="dateModified" datetime="2023-03-06T15:26:21+08:00">2023-03-06</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/chatGPT/" itemprop="url" rel="index"><span itemprop="name">chatGPT</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">2.4k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">2 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。</p>
+<a id="more"></a>
+
+
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ol>
+<li><a href="#orgf87dd93">explain结果有哪些字段</a></li>
+<li><a href="#orgf0000f9">详细说说type</a></li>
+<li><a href="#org0777d3c">详细说说Extra</a></li>
+</ol>
+<p><a id="orgf87dd93"></a></p>
+<h1 id="explain结果有哪些字段"><a href="#explain结果有哪些字段" class="headerlink" title="explain结果有哪些字段"></a>explain结果有哪些字段</h1><p>EXPLAIN 是一个 MySQL 命令，用于分析查询语句的执行计划。它将解释 MySQL 如何处理查询并提供有关查询执行的详细信息，包括查询使用的索引、表连接顺序、访问类型等等。在 MySQL 5.7 以前，EXPLAIN 产生以下列：</p>
+<ul>
+<li>id: 查询标识符，表示查询中每个 SELECT 子句或操作的序列号，从 1 开始递增。当查询中包含子查询时，每个子查询都将有自己的唯一标识符。</li>
+<li>select<sub>type</sub>: 表示 SELECT 操作的类型。常见的值包括 SIMPLE（简单 SELECT，不包含 UNION或子查询）、PRIMARY（最外层查询）、SUBQUERY（子查询中的第一个 SELECT）、DERIVED（派生表中的 SELECT）、UNION（UNION 中的第二个或后续的 SELECT）等。</li>
+<li>table: 表示表名，如果查询使用了别名，则显示别名。</li>
+<li>partitions: 表示匹配分区的数量。</li>
+<li>type: 表示使用的联接类型。常见的值包括ALL（全表扫描）、index（只扫描索引）、range（范围扫描）、ref（使用非唯一索引扫描表）、eq<sub>ref</sub>（使用唯一索引扫描表）、const（使用常量索引或常量表扫描）等。</li>
+<li>possible<sub>keys</sub>: 表示 MySQL 可能使用的索引。</li>
+<li>key: 表示 MySQL 实际选择使用的索引。如果没有选择任何索引，则为 NULL。</li>
+<li>key<sub>len</sub>: 表示 MySQL 选择的索引的长度。较短的索引通常比较长的索引更快。</li>
+<li>ref: 表示 MySQL 使用哪个列或常量与索引匹配。</li>
+<li>rows: 表示 MySQL 预计扫描的行数。</li>
+<li>filtered: 表示 MySQL 在表中找到的行占匹配条件的百分比。</li>
+<li>Extra: 表示 MySQL 针对查询执行的额外操作。常见的值包括 Using where（使用了 WHERE 条件）、Using index（使用了覆盖索引，不需要访问表）、Using temporary（使用了临时表）、Using filesort（使用了排序）等。</li>
+</ul>
+<p><a id="orgf0000f9"></a></p>
+<h1 id="详细说说type"><a href="#详细说说type" class="headerlink" title="详细说说type"></a>详细说说type</h1><p>在 MySQL 中，type 是 EXPLAIN 命令输出中的一个关键字段，它表示了 MySQL选择用于访问表的算法，也就是表扫描类型。这个字段可以帮助您确定查询性能的瓶颈所在，以及如何对查询进行优化。</p>
+<p>下面是 type 可能的取值以及对应的含义：</p>
+<ul>
+<li>system：只有一行记录（例如，SELECT COUNT(*) FROM tablename）。</li>
+<li>const：使用 PRIMARY KEY 或 UNIQUE 索引进行的查询，只返回一行。</li>
+<li>eq<sub>ref</sub>：连接查询，使用唯一索引查询。</li>
+<li>ref：连接查询，使用非唯一索引查询。</li>
+<li>range：只检索给定范围内的行，使用索引访问。</li>
+<li>index：全表扫描，但是只使用索引列进行查询。</li>
+<li>ALL：全表扫描，没有使用索引列。</li>
+</ul>
+<p>可以看出，type 取值越好，查询性能越好，因为使用索引的查询效率通常比全表扫描更高。如果查询中的某个表的 type 取值为 ALL，则需要考虑优化查询，例如添加索引、使用更好的查询条件等。</p>
+<p><a id="org0777d3c"></a></p>
+<h1 id="详细说说Extra"><a href="#详细说说Extra" class="headerlink" title="详细说说Extra"></a>详细说说Extra</h1><p>在 MySQL 中，EXPLAIN 命令可以用于查看查询语句的执行计划。执行计划会以表格的形式展现出来，其中有一个名为 Extra 的列，用于提供一些额外的信息。下面详细介绍一下 Extra 列中常见的一些值和其含义：</p>
+<ul>
+<li>Using where：表示 MySQL 服务器需要在存储引擎层使用 WHERE 条件过滤数据；</li>
+<li>Using index：表示 MySQL 服务器使用了覆盖索引，即查询语句可以直接通过索引中的数据满足查询条件，无需回表查询数据；</li>
+<li>Using temporary：表示 MySQL 服务器需要使用临时表来处理查询；</li>
+<li>Using filesort：表示 MySQL 服务器需要进行文件排序操作；</li>
+<li>Using join buffer (Block Nested Loop)：表示 MySQL 服务器使用块嵌套循环算法（Block Nested Loop）来处理连接操作；</li>
+<li>Using join buffer (Batched Join)：表示 MySQL 服务器使用批量连接算法（Batched Join）来处理连接操作；</li>
+<li>Using index condition：表示 MySQL 服务器需要使用索引条件过滤数据；</li>
+<li>Using where; Using index：表示 MySQL 服务器需要在存储引擎层使用 WHERE 条件过滤数据，并使用覆盖索引来避免回表查询；</li>
+<li>Using where; Using index; Using join buffer (Block Nested Loop)：表示 MySQL 服务器需要在存储引擎层使用 WHERE 条件过滤数据，并使用索引和块嵌套循环算法来处理连接操作。</li>
+</ul>
+<p>需要注意的是，Extra 列中的值不一定是唯一的，例如一个查询语句可能会同时使用多个策略来处理查询，那么 Extra 列中会列出所有的策略。</p>
+<p>对于优化查询语句，特别是对于大型复杂的查询，我们需要深入理解 EXPLAIN 命令输出的信息，特别是 Extra 列中的信息，以帮助我们理解查询语句的执行计划，发现查询语句中的性能问题，及时进行调整和优化。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          
+            <a href="/tags/chatGPT/" rel="tag"># chatGPT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/02/27/基于docker-compose部署mysql/" rel="next" title="基于docker-compose部署mysql">
+                <i class="fa fa-chevron-left"></i> 基于docker-compose部署mysql
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/03/06/继续拷打ChatGPT关于如何建立字符串索引/" rel="prev" title="继续拷打ChatGPT关于如何建立字符串索引">
+                继续拷打ChatGPT关于如何建立字符串索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yellow">
+  
+  <p class="site-author-name" itemprop="name">Yellow</p>
+  <div class="site-description motion-element" itemprop="description">碼農</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:yellowdingjr@gmail.com" title="E-Mail &rarr; mailto:yellowdingjr@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#explain结果有哪些字段"><span class="nav-number">2.</span> <span class="nav-text">explain结果有哪些字段</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#详细说说type"><span class="nav-number">3.</span> <span class="nav-text">详细说说type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#详细说说Extra"><span class="nav-number">4.</span> <span class="nav-text">详细说说Extra</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yellow</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">108k</span>
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+</html>
+<!-- 页面点击社会主义价值观 -->
+<script type="text/javascript" src="/js/src/click.js"></script>
