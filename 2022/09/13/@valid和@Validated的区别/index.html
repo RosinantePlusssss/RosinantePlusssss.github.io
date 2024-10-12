@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rosinanteplusssss.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="@valid和@Validated的区别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="valid和Validated的区别">
+<meta property="og:url" content="https://rosinanteplusssss.github.io/2022/09/13/@valid%E5%92%8C@Validated%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="日復一日">
+<meta property="og:description" content="@valid和@Validated的区别">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-13T13:02:11.000Z">
+<meta property="article:modified_time" content="2022-11-18T08:52:25.452Z">
+<meta property="article:author" content="Yellow">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rosinanteplusssss.github.io/2022/09/13/@valid%E5%92%8C@Validated%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rosinanteplusssss.github.io/2022/09/13/@valid%E5%92%8C@Validated%E7%9A%84%E5%8C%BA%E5%88%AB/","path":"2022/09/13/@valid和@Validated的区别/","title":"valid和Validated的区别"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>valid和Validated的区别 | 日復一日</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">日復一日</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">當一個堅持的人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">两者区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Valid"><span class="nav-number">3.</span> <span class="nav-text">@Valid</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Validated"><span class="nav-number">4.</span> <span class="nav-text">@Validated</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C"><span class="nav-number">4.1.</span> <span class="nav-text">分组校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">4.2.</span> <span class="nav-text">分组校验顺序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="nav-number">5.</span> <span class="nav-text">相关文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yellow</p>
+  <div class="site-description" itemprop="description">碼農</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rosinanteplusssss.github.io/2022/09/13/@valid%E5%92%8C@Validated%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yellow">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日復一日">
+      <meta itemprop="description" content="碼農">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="valid和Validated的区别 | 日復一日">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          valid和Validated的区别
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-13 21:02:11" itemprop="dateCreated datePublished" datetime="2022-09-13T21:02:11+08:00">2022-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-18 16:52:25" itemprop="dateModified" datetime="2022-11-18T16:52:25+08:00">2022-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p> <code>@valid</code>和<code>@Validated</code>的区别</p>
+<span id="more"></span>
+
+
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ol>
+<li><a href="#org6b034fb">两者区别</a></li>
+<li><a href="#org58fdc8c">@Valid</a></li>
+<li><a href="#org68d0736">@Validated</a><ol>
+<li><a href="#org1bd5216">分组校验</a></li>
+<li><a href="#org262ce35">分组校验顺序</a></li>
+</ol>
+</li>
+<li><a href="#org9e09576">相关文章</a></li>
+</ol>
+<p><a id="org6b034fb"></a></p>
+<h1 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h1><ol>
+<li>注解使用范围<ul>
+<li><code>@Valid</code>：方法、构造函数、方法参数和成员属性上</li>
+<li><code>@Validated</code>：类型、方法和方法参数上</li>
+</ul>
+</li>
+<li>特殊用法<ul>
+<li><code>@Validated</code>提供分组功能</li>
+</ul>
+</li>
+</ol>
+<p><a id="org58fdc8c"></a></p>
+<h1 id="Valid"><a href="#Valid" class="headerlink" title="@Valid"></a>@Valid</h1><p><code>@Valid</code>所属包为：<code>javax.validation.Valid</code>。</p>
+<ol>
+<li>实体类<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class TestDto &#123;</span><br><span class="line"></span><br><span class="line">    @NotEmpty(message = &quot;id不能为空&quot;)</span><br><span class="line">    private String id ;</span><br><span class="line">    @NotEmpty(message = &quot;name不能为空&quot;)</span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    public String getId() &#123;</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setId(String id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在controller层的方法上对需要检验的类添加<code>@Valid</code>注解。  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;/test&quot;)</span><br><span class="line">public ResponseEntity&lt;String&gt; test(@Valid @RequestBody TestDto testDto, BindingResult br) &#123;</span><br><span class="line">    if(br.hasErrors())&#123;</span><br><span class="line">        String field = br.getFieldError().getField();</span><br><span class="line">        System.out.println(field);</span><br><span class="line">    &#125;</span><br><span class="line">    return new ResponseEntity&lt;String&gt;(&quot;test1121&quot;,</span><br><span class="line">            HttpStatus.OK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>类嵌套检验,在成员属性上添加<code>@Valid</code>注解<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class TestDto &#123;</span><br><span class="line"></span><br><span class="line">    @Valid</span><br><span class="line">    private DtoInfo dtoInfo;</span><br><span class="line"></span><br><span class="line">    .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><a id="org68d0736"></a></p>
+<h1 id="Validated"><a href="#Validated" class="headerlink" title="@Validated"></a>@Validated</h1><p><code>@Validated</code>是<code>@Valid</code>的一次封装，<code>@Validated</code>多了一个分组功能。（ <strong>注</strong> ：<code>@Validated</code>不能用在成员属性上，会报错。）</p>
+<p><a id="org1bd5216"></a></p>
+<h2 id="分组校验"><a href="#分组校验" class="headerlink" title="分组校验"></a>分组校验</h2><p>当一个类新增或者修改时有些校验对新增时必须的，对于更新却不是必要的。<br>那么此时就可以使用groups进行分组校验。</p>
+<ol>
+<li>分组接口类<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">package com.example.valid.interfaces;</span><br><span class="line"></span><br><span class="line">public interface Insert &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>实体类<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class TestDto &#123;</span><br><span class="line"></span><br><span class="line">    @NotEmpty(message = &quot;id不能为空&quot;,groups=&#123;Insert.class&#125;)</span><br><span class="line">    private String id ;</span><br><span class="line">    @NotEmpty(message = &quot;name不能为空&quot;,groups=&#123;Insert.class&#125;)</span><br><span class="line">    @Size(min=2,max=30,message = &quot;为了测试&quot;,groups=&#123;Update.class&#125;)</span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    //字段不为空，且长度在3-8之间  </span><br><span class="line">    @NotEmpty  </span><br><span class="line">    @Size(min=3,max=8)  </span><br><span class="line">    private String shortName;  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>controller层<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 需要校验id、name和shortName</span><br><span class="line">@RequestMapping(value = &quot;/insert&quot;)</span><br><span class="line">public ResponseEntity&lt;String&gt; test(@Validated(&#123;Insert.class&#125;) @RequestBody TestDto testDto, BindingResult br) &#123;</span><br><span class="line">    if(br.hasErrors())&#123;</span><br><span class="line">        String field = br.getFieldError().getField();</span><br><span class="line">        System.out.println(field);</span><br><span class="line">    &#125;</span><br><span class="line">    return new ResponseEntity&lt;String&gt;(&quot;test1121&quot;,</span><br><span class="line">            HttpStatus.OK);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 不需要校验id,需要校验name，都需要校验shortName</span><br><span class="line">@RequestMapping(value = &quot;/update&quot;)</span><br><span class="line">public ResponseEntity&lt;String&gt; testUpdate(@Validated(&#123;Update.class&#125;) @RequestBody TestDto testDto, BindingResult br) &#123;</span><br><span class="line">    if(br.hasErrors())&#123;</span><br><span class="line">        String field = br.getFieldError().getField();</span><br><span class="line">        System.out.println(field);</span><br><span class="line">    &#125;</span><br><span class="line">    return new ResponseEntity&lt;String&gt;(&quot;test1121&quot;,</span><br><span class="line">            HttpStatus.OK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="org262ce35"></a></li>
+</ol>
+<h2 id="分组校验顺序"><a href="#分组校验顺序" class="headerlink" title="分组校验顺序"></a>分组校验顺序</h2><p>在某些特殊场景下需要对校验进行优先排序的时候需要用到。<br>可以定义一个接口，并用<code>@GroupSequence</code>来定义需要验证的分组序列。</p>
+<pre><code>@GroupSequence(&#123; Default.class, CarChecks.class, DriverChecks.class &#125;)
+public interface OrderedChecks &#123;&#125;
+</code></pre>
+<p>此分组用法与其它分组一样，只是此分组拥有按分组顺序校验的功能。<br><strong>注</strong> </p>
+<pre><code>定义序列的组和组成序列的组不能通过级联序列定义或组继承直接或间接地参与循环依赖关系。如果对包含此类循环的组计算，则会引发 GroupDefinitionException。
+</code></pre>
+<p><a id="org9e09576"></a></p>
+<h1 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhulibin2012/p/14154342.htmla">@Validated和@Valid区别</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/24/Git%E6%8F%90%E4%BA%A4%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F/" rel="prev" title="Git提交日志格式">
+                  <i class="fa fa-angle-left"></i> Git提交日志格式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/14/@Validate%E6%A0%A1%E9%AA%8C%E6%95%B0%E7%BB%84/" rel="next" title="Validate校验数组">
+                  Validate校验数组 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Yellow</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

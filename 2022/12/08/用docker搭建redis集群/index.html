@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rosinanteplusssss.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="旧的服务器过期了，换了一个新的服务器，所以需要重新弄一套redis集群。记录一下操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker搭建redis集群">
+<meta property="og:url" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/index.html">
+<meta property="og:site_name" content="日復一日">
+<meta property="og:description" content="旧的服务器过期了，换了一个新的服务器，所以需要重新弄一套redis集群。记录一下操作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-08T09:28:56.000Z">
+<meta property="article:modified_time" content="2022-12-09T09:57:48.808Z">
+<meta property="article:author" content="Yellow">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/","path":"2022/12/08/用docker搭建redis集群/","title":"Docker搭建redis集群"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker搭建redis集群 | 日復一日</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">日復一日</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">當一個堅持的人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E5%89%8D%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">事前准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">服务器设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%8C%82%E8%BD%BD%E7%9B%AE%E5%BD%95"><span class="nav-number">3.1.</span> <span class="nav-text">创建挂载目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAredis%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">创建redis配置文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">Docker配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAdocker-compose-yml%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">创建docker-compose.yml文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4"><span class="nav-number">5.</span> <span class="nav-text">创建集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E9%9B%86%E7%BE%A4"><span class="nav-number">5.1.</span> <span class="nav-text">建立集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">5.2.</span> <span class="nav-text">查看信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E6%89%A9%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">主从扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E8%8A%82%E7%82%B9"><span class="nav-number">6.1.</span> <span class="nav-text">新建节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E9%9B%86%E7%BE%A4%E5%B9%B6%E4%B8%94%E5%88%86%E9%85%8D%E6%A7%BD%E5%8F%B7"><span class="nav-number">6.2.</span> <span class="nav-text">加入集群并且分配槽号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%B8%BB%E8%8A%82%E7%82%B96381%E5%88%86%E9%85%8D%E4%BB%8E%E8%8A%82%E7%82%B96382"><span class="nav-number">6.3.</span> <span class="nav-text">为主节点6381分配从节点6382</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E7%BC%A9%E5%AE%B9"><span class="nav-number">7.</span> <span class="nav-text">主从缩容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E4%B8%BB%E8%8A%82%E7%82%B9%E6%A7%BD%E4%BD%8D%E5%88%86%E9%85%8D%E7%BB%99%E5%85%B6%E4%BB%96%E8%8A%82%E7%82%B9"><span class="nav-number">7.1.</span> <span class="nav-text">将主节点槽位分配给其他节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9"><span class="nav-number">7.2.</span> <span class="nav-text">删除节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">8.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">9.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yellow</p>
+  <div class="site-description" itemprop="description">碼農</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yellow">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日復一日">
+      <meta itemprop="description" content="碼農">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker搭建redis集群 | 日復一日">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker搭建redis集群
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-12-08 17:28:56" itemprop="dateCreated datePublished" datetime="2022-12-08T17:28:56+08:00">2022-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-09 17:57:48" itemprop="dateModified" datetime="2022-12-09T17:57:48+08:00">2022-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>旧的服务器过期了，换了一个新的服务器，所以需要重新弄一套redis集群。记录一下操作。</p>
+<span id="more"></span>
+
+
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ol>
+<li><a href="#orgc56b546">事前准备</a></li>
+<li><a href="#orgf809f00">服务器设置</a><ol>
+<li><a href="#org7aeee7c">创建挂载目录</a></li>
+<li><a href="#org48500dd">创建redis配置文件</a></li>
+</ol>
+</li>
+<li><a href="#org94840fe">Docker配置</a><ol>
+<li><a href="#org809e70f">创建docker-compose.yml文件</a></li>
+</ol>
+</li>
+<li><a href="#org45df25a">创建集群</a><ol>
+<li><a href="#orge036b71">建立集群</a></li>
+<li><a href="#org6df9291">查看信息</a></li>
+</ol>
+</li>
+<li><a href="#org6255748">主从扩容</a><ol>
+<li><a href="#org426f052">新建节点</a></li>
+<li><a href="#orgc1b7582">加入集群并且分配槽号</a></li>
+<li><a href="#org6de6e7e">为主节点6381分配从节点6382</a></li>
+</ol>
+</li>
+<li><a href="#org27f1bf4">主从缩容</a><ol>
+<li><a href="#orgf6a9ec4">将主节点槽位分配给其他节点</a></li>
+<li><a href="#orgec63baf">删除节点</a></li>
+</ol>
+</li>
+<li><a href="#org8abf507">注意事项</a></li>
+<li><a href="#org262015c">参考文章</a></li>
+</ol>
+<p>使用docker快速搭建redis集群，一共6个节点3主3从，并且配置外网访问。</p>
+<p><a id="orgc56b546"></a></p>
+<h1 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h1><ul>
+<li>云服务器提前放开端口，端口和集群总线端口（端口+10000）,放开端口为（7001-7003，7101-7103，17001-17003，17101-17103）</li>
+<li>安装docker-compose</li>
+</ul>
+<p><a id="orgf809f00"></a></p>
+<h1 id="服务器设置"><a href="#服务器设置" class="headerlink" title="服务器设置"></a>服务器设置</h1><p><a id="org7aeee7c"></a></p>
+<h2 id="创建挂载目录"><a href="#创建挂载目录" class="headerlink" title="创建挂载目录"></a>创建挂载目录</h2><pre><code>mkdir /docker/redis/share/redis6-m1/data
+mkdir /docker/redis/share/redis6-m1/conf
+mkdir /docker/redis/share/redis6-m2/data
+mkdir /docker/redis/share/redis6-m2/conf
+mkdir /docker/redis/share/redis6-m3/data
+mkdir /docker/redis/share/redis6-m3/conf
+mkdir /docker/redis/share/redis6-s1/data
+mkdir /docker/redis/share/redis6-s1/conf
+mkdir /docker/redis/share/redis6-s2/data
+mkdir /docker/redis/share/redis6-s2/conf
+mkdir /docker/redis/share/redis6-s3/data
+mkdir /docker/redis/share/redis6-s3/conf
+</code></pre>
+<p><a id="org48500dd"></a></p>
+<h2 id="创建redis配置文件"><a href="#创建redis配置文件" class="headerlink" title="创建redis配置文件"></a>创建redis配置文件</h2><p>分别在每个conf目录下创建文件redis.conf</p>
+<pre><code>#端口号，写文件夹对映的端口
+Port 7001
+#开启集群
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+#开启aof存储
+appendonly yes
+#设置登录密码
+requirepass 123456
+#设置节点密码，集群必设
+masterauth 123456
+# 关闭保护，外网可直接访问
+protected-mode no
+</code></pre>
+<p><a id="org94840fe"></a></p>
+<h1 id="Docker配置"><a href="#Docker配置" class="headerlink" title="Docker配置"></a>Docker配置</h1><p><a id="org809e70f"></a></p>
+<h2 id="创建docker-compose-yml文件"><a href="#创建docker-compose-yml文件" class="headerlink" title="创建docker-compose.yml文件"></a>创建docker-compose.yml文件</h2><p>找一个位置创建redis的docker-compose.yml文件</p>
+<pre><code>version: &quot;3.4&quot;
+
+services:
+  redis1:
+    image: redis:6.2.6
+    restart: &quot;no&quot;
+    container_name: redis6-m1
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - /docker/redis/share/redis6-m1/data:/data
+      - /docker/redis/share/redis6-m1/conf/redis.conf:/etc/redis/redis.conf
+    network_mode: &quot;host&quot;
+
+  redis2:
+    image: redis:6.2.6
+    restart: &quot;no&quot;
+    container_name: redis6-m2
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - /docker/redis/share/redis6-m2/data:/data
+      - /docker/redis/share/redis6-m2/conf/redis.conf:/etc/redis/redis.conf
+    network_mode: &quot;host&quot;
+
+  redis3:
+    image: redis:6.2.6
+    restart: &quot;no&quot;
+    container_name: redis6-m3
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - /docker/redis/share/redis6-m3/data:/data
+      - /docker/redis/share/redis6-m3/conf/redis.conf:/etc/redis/redis.conf
+    network_mode: &quot;host&quot;
+
+  redis4:
+    image: redis:6.2.6
+    restart: &quot;no&quot;
+    container_name: redis6-s1
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - /docker/redis/share/redis6-s1/data:/data
+      - /docker/redis/share/redis6-s1/conf/redis.conf:/etc/redis/redis.conf
+    network_mode: &quot;host&quot;
+
+  redis5:
+    image: redis:6.2.6
+    restart: &quot;no&quot;
+    container_name: redis6-s2
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - /docker/redis/share/redis6-s2/data:/data
+      - /docker/redis/share/redis6-s2/conf/redis.conf:/etc/redis/redis.conf
+    network_mode: &quot;host&quot;
+
+  redis6:
+    image: redis:6.2.6
+    restart: &quot;no&quot;
+    container_name: redis6-s3
+    command: redis-server /etc/redis/redis.conf
+    volumes:
+      - /docker/redis/share/redis6-s3/data:/data
+      - /docker/redis/share/redis6-s3/conf/redis.conf:/etc/redis/redis.conf
+    network_mode: &quot;host&quot;
+</code></pre>
+<p>执行命令</p>
+<pre><code>docker-compose up -d
+</code></pre>
+<p>查看实例是否成功</p>
+<pre><code>docker ps
+</code></pre>
+<p><a id="org45df25a"></a></p>
+<h1 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h1><p><a id="orge036b71"></a></p>
+<h2 id="建立集群"><a href="#建立集群" class="headerlink" title="建立集群"></a>建立集群</h2><p>进入任一redis容器里</p>
+<pre><code>docker exec -it redis6-m1 /bin/bash
+</code></pre>
+<p>容器内执行命令</p>
+<pre><code>redis-cli --cluster create 外网ip:7001  外网ip:7002  外网ip:7003 外网ip:7101 外网ip:7102  外网ip:7103  --cluster-replicas 1
+</code></pre>
+<p>中途会提示是否启用上述配置，输入yes </p>
+<p>至此redis集群搭建成功。</p>
+<p><a id="org6df9291"></a></p>
+<h2 id="查看信息"><a href="#查看信息" class="headerlink" title="查看信息"></a>查看信息</h2><p>进入redis</p>
+<pre><code>redis-cli -c -p 7001 -a 密码
+</code></pre>
+<p>查看节点信息和全部节点</p>
+<pre><code>cluster info
+cluster nodes
+</code></pre>
+<p><a id="org6255748"></a></p>
+<h1 id="主从扩容"><a href="#主从扩容" class="headerlink" title="主从扩容"></a>主从扩容</h1><p><a id="org426f052"></a></p>
+<h2 id="新建节点"><a href="#新建节点" class="headerlink" title="新建节点"></a>新建节点</h2><p>以集群方式新建6381、6382两个节点，按照之前的方式放开端口、创建对应目录和redis配置文件,然后执行创建容器命令。</p>
+<pre><code>docker run --name redis6-m4  --net host  -v /docker/redis/share/redis6-m4/conf/redis.conf:/etc/redis/redis.conf -v /docker/redis/share/redis6-m4/data:/data -d redis:6.2.6 redis-server /etc/redis/redis.conf 
+
+docker run --name redis6-s4  --net host  -v /docker/redis/share/redis6-s4/conf/redis.conf:/etc/redis/redis.conf -v /docker/redis/share/redis6-s4/data:/data -d redis:6.2.6 redis-server /etc/redis/redis.conf 
+</code></pre>
+<p>以上命令的意思</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name redis6-m4 												# 创建后容器名</span><br><span class="line">--net host 																	# 外网访问，使用宿主机的ip和端口</span><br><span class="line">-v /docker/redis/share/redis6-m4/conf/redis.conf:/etc/redis/redis.conf 		# 映射配置文件</span><br><span class="line">-v /docker/redis/share/redis6-m4/data:/data 								# 映射数据存储位置</span><br><span class="line">-d 																			# 后台启动，使用此方式启动，则redis.conf中daemonize必须设置为no，否则会无法启动, Redis默认不是以守护进程的方式运行</span><br><span class="line">redis:6.2.6 redis-server /etc/redis/redis.conf 								# 在容器内启动redis-server的命令，主要是为了加载配置</span><br></pre></td></tr></table></figure>
+
+<p><a id="orgc1b7582"></a></p>
+<h2 id="加入集群并且分配槽号"><a href="#加入集群并且分配槽号" class="headerlink" title="加入集群并且分配槽号"></a>加入集群并且分配槽号</h2><p>进入刚创建的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it redis6-m4</span><br></pre></td></tr></table></figure>
+<p>将新增的6381节点作为master节点加入原集群（需要原集群内的节点作为领路人，7001原集群领路人）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster add-node 192.168.xx.xx:6381 192.168.xx.xx:7001 -a 密码 # 因为设置了集群密码所以需要验证，如果没有设置就不用-a 密码</span><br></pre></td></tr></table></figure>
+
+
+<p>检查该节点是否加入redis集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster check 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
+
+
+<p>重新分配槽号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster reshard 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
+
+
+<p>分配后检查槽号信息，新分配到的槽号是从前面的几个区间各匀出一点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster check 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p><a id="org6de6e7e"></a></p>
+<h2 id="为主节点6381分配从节点6382"><a href="#为主节点6381分配从节点6382" class="headerlink" title="为主节点6381分配从节点6382"></a>为主节点6381分配从节点6382</h2><pre><code>redis-cli --cluster add-node 192.168.xx.xx:6382 192.168.xx.xx:6381 --cluster-slave --cluster-master-id e9355ad2cfe912af08af4258cf4692fe58ee8a39 -a 密码
+</code></pre>
+<p>分配之后再检查一下集群信息发现已经成功了。</p>
+<p><a id="org27f1bf4"></a></p>
+<h1 id="主从缩容"><a href="#主从缩容" class="headerlink" title="主从缩容"></a>主从缩容</h1><p><a id="orgf6a9ec4"></a></p>
+<h2 id="将主节点槽位分配给其他节点"><a href="#将主节点槽位分配给其他节点" class="headerlink" title="将主节点槽位分配给其他节点"></a>将主节点槽位分配给其他节点</h2><p>将主节点6381的槽位分配给7001</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster reshard 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>检查是否清空槽位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster check 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
+
+<p><a id="orgec63baf"></a></p>
+<h2 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h2><p>删除6381和6382节点</p>
+<pre><code>redis-cli --cluster del-node 192.168.xx.xx:6382 d8078458a650b5b9880b458c63c309b3150375f2 -a 密码
+redis-cli --cluster del-node 192.168.xx.xx:6381 e9355ad2cfe912af08af4258cf4692fe58ee8a39 -a 密码
+</code></pre>
+<p><a id="org8abf507"></a></p>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ul>
+<li><p>建立集群时需要保证集群每个节点中都没有数据。如果写入了数据想要重建集群，需要先把&#x2F;docker&#x2F;redis&#x2F;share&#x2F;*&#x2F;data目录下的文件清空</p>
+<p>find &#x2F;docker&#x2F;redis&#x2F;share&#x2F;   -name “nodes.<em>“ |xargs rm -rf<br>find &#x2F;docker&#x2F;redis&#x2F;share&#x2F;   -name “</em>.aof” |xargs rm -rf</p>
+</li>
+</ul>
+<p><a id="org262015c"></a></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/bluesummer/p/14546412.html">Docker快速建立Redis集群(Cluster)并配置外网访问</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45974277/article/details/125376644">Docker搭建redis集群</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/21/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6%E3%80%8ADevOps%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97%E3%80%8B%E7%AC%94%E8%AE%B0%E5%AF%BC%E5%87%BA/" rel="prev" title="微信读书《DevOps实践指南》笔记导出">
+                  <i class="fa fa-angle-left"></i> 微信读书《DevOps实践指南》笔记导出
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/12/20/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AC%AC%E4%B8%89%E7%89%88%E3%80%8B%E7%AC%94%E8%AE%B0%E5%AF%BC%E5%87%BA/" rel="next" title="微信读书《深入理解Java虚拟机第三版》笔记导出">
+                  微信读书《深入理解Java虚拟机第三版》笔记导出 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Yellow</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

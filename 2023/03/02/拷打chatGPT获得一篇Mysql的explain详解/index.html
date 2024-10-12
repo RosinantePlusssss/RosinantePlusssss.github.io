@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rosinanteplusssss.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拷打chatGPT获得一篇Mysql的explain详解">
+<meta property="og:url" content="https://rosinanteplusssss.github.io/2023/03/02/%E6%8B%B7%E6%89%93chatGPT%E8%8E%B7%E5%BE%97%E4%B8%80%E7%AF%87Mysql%E7%9A%84explain%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="日復一日">
+<meta property="og:description" content="虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-02T13:02:12.000Z">
+<meta property="article:modified_time" content="2023-03-06T07:26:21.402Z">
+<meta property="article:author" content="Yellow">
+<meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="chatGPT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rosinanteplusssss.github.io/2023/03/02/%E6%8B%B7%E6%89%93chatGPT%E8%8E%B7%E5%BE%97%E4%B8%80%E7%AF%87Mysql%E7%9A%84explain%E8%AF%A6%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rosinanteplusssss.github.io/2023/03/02/%E6%8B%B7%E6%89%93chatGPT%E8%8E%B7%E5%BE%97%E4%B8%80%E7%AF%87Mysql%E7%9A%84explain%E8%AF%A6%E8%A7%A3/","path":"2023/03/02/拷打chatGPT获得一篇Mysql的explain详解/","title":"拷打chatGPT获得一篇Mysql的explain详解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>拷打chatGPT获得一篇Mysql的explain详解 | 日復一日</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">日復一日</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">當一個堅持的人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#explain%E7%BB%93%E6%9E%9C%E6%9C%89%E5%93%AA%E4%BA%9B%E5%AD%97%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">explain结果有哪些字段</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%AF%B4%E8%AF%B4type"><span class="nav-number">3.</span> <span class="nav-text">详细说说type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%AF%B4%E8%AF%B4Extra"><span class="nav-number">4.</span> <span class="nav-text">详细说说Extra</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yellow</p>
+  <div class="site-description" itemprop="description">碼農</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rosinanteplusssss.github.io/2023/03/02/%E6%8B%B7%E6%89%93chatGPT%E8%8E%B7%E5%BE%97%E4%B8%80%E7%AF%87Mysql%E7%9A%84explain%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yellow">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日復一日">
+      <meta itemprop="description" content="碼農">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="拷打chatGPT获得一篇Mysql的explain详解 | 日復一日">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          拷打chatGPT获得一篇Mysql的explain详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-02 21:02:12" itemprop="dateCreated datePublished" datetime="2023-03-02T21:02:12+08:00">2023-03-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-06 15:26:21" itemprop="dateModified" datetime="2023-03-06T15:26:21+08:00">2023-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/chatGPT/" itemprop="url" rel="index"><span itemprop="name">chatGPT</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>虽然前几个月chatGPT就火起来了，不过平常也很少用chatGPT，最近看了一篇文章如何使用GPT之后惊为天人。所以我们也来拷打一下GPT获得一下知识。</p>
+<span id="more"></span>
+
+
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ol>
+<li><a href="#orgf87dd93">explain结果有哪些字段</a></li>
+<li><a href="#orgf0000f9">详细说说type</a></li>
+<li><a href="#org0777d3c">详细说说Extra</a></li>
+</ol>
+<p><a id="orgf87dd93"></a></p>
+<h1 id="explain结果有哪些字段"><a href="#explain结果有哪些字段" class="headerlink" title="explain结果有哪些字段"></a>explain结果有哪些字段</h1><p>EXPLAIN 是一个 MySQL 命令，用于分析查询语句的执行计划。它将解释 MySQL 如何处理查询并提供有关查询执行的详细信息，包括查询使用的索引、表连接顺序、访问类型等等。在 MySQL 5.7 以前，EXPLAIN 产生以下列：</p>
+<ul>
+<li>id: 查询标识符，表示查询中每个 SELECT 子句或操作的序列号，从 1 开始递增。当查询中包含子查询时，每个子查询都将有自己的唯一标识符。</li>
+<li>select<sub>type</sub>: 表示 SELECT 操作的类型。常见的值包括 SIMPLE（简单 SELECT，不包含 UNION或子查询）、PRIMARY（最外层查询）、SUBQUERY（子查询中的第一个 SELECT）、DERIVED（派生表中的 SELECT）、UNION（UNION 中的第二个或后续的 SELECT）等。</li>
+<li>table: 表示表名，如果查询使用了别名，则显示别名。</li>
+<li>partitions: 表示匹配分区的数量。</li>
+<li>type: 表示使用的联接类型。常见的值包括ALL（全表扫描）、index（只扫描索引）、range（范围扫描）、ref（使用非唯一索引扫描表）、eq<sub>ref</sub>（使用唯一索引扫描表）、const（使用常量索引或常量表扫描）等。</li>
+<li>possible<sub>keys</sub>: 表示 MySQL 可能使用的索引。</li>
+<li>key: 表示 MySQL 实际选择使用的索引。如果没有选择任何索引，则为 NULL。</li>
+<li>key<sub>len</sub>: 表示 MySQL 选择的索引的长度。较短的索引通常比较长的索引更快。</li>
+<li>ref: 表示 MySQL 使用哪个列或常量与索引匹配。</li>
+<li>rows: 表示 MySQL 预计扫描的行数。</li>
+<li>filtered: 表示 MySQL 在表中找到的行占匹配条件的百分比。</li>
+<li>Extra: 表示 MySQL 针对查询执行的额外操作。常见的值包括 Using where（使用了 WHERE 条件）、Using index（使用了覆盖索引，不需要访问表）、Using temporary（使用了临时表）、Using filesort（使用了排序）等。</li>
+</ul>
+<p><a id="orgf0000f9"></a></p>
+<h1 id="详细说说type"><a href="#详细说说type" class="headerlink" title="详细说说type"></a>详细说说type</h1><p>在 MySQL 中，type 是 EXPLAIN 命令输出中的一个关键字段，它表示了 MySQL选择用于访问表的算法，也就是表扫描类型。这个字段可以帮助您确定查询性能的瓶颈所在，以及如何对查询进行优化。</p>
+<p>下面是 type 可能的取值以及对应的含义：</p>
+<ul>
+<li>system：只有一行记录（例如，SELECT COUNT(*) FROM tablename）。</li>
+<li>const：使用 PRIMARY KEY 或 UNIQUE 索引进行的查询，只返回一行。</li>
+<li>eq<sub>ref</sub>：连接查询，使用唯一索引查询。</li>
+<li>ref：连接查询，使用非唯一索引查询。</li>
+<li>range：只检索给定范围内的行，使用索引访问。</li>
+<li>index：全表扫描，但是只使用索引列进行查询。</li>
+<li>ALL：全表扫描，没有使用索引列。</li>
+</ul>
+<p>可以看出，type 取值越好，查询性能越好，因为使用索引的查询效率通常比全表扫描更高。如果查询中的某个表的 type 取值为 ALL，则需要考虑优化查询，例如添加索引、使用更好的查询条件等。</p>
+<p><a id="org0777d3c"></a></p>
+<h1 id="详细说说Extra"><a href="#详细说说Extra" class="headerlink" title="详细说说Extra"></a>详细说说Extra</h1><p>在 MySQL 中，EXPLAIN 命令可以用于查看查询语句的执行计划。执行计划会以表格的形式展现出来，其中有一个名为 Extra 的列，用于提供一些额外的信息。下面详细介绍一下 Extra 列中常见的一些值和其含义：</p>
+<ul>
+<li>Using where：表示 MySQL 服务器需要在存储引擎层使用 WHERE 条件过滤数据；</li>
+<li>Using index：表示 MySQL 服务器使用了覆盖索引，即查询语句可以直接通过索引中的数据满足查询条件，无需回表查询数据；</li>
+<li>Using temporary：表示 MySQL 服务器需要使用临时表来处理查询；</li>
+<li>Using filesort：表示 MySQL 服务器需要进行文件排序操作；</li>
+<li>Using join buffer (Block Nested Loop)：表示 MySQL 服务器使用块嵌套循环算法（Block Nested Loop）来处理连接操作；</li>
+<li>Using join buffer (Batched Join)：表示 MySQL 服务器使用批量连接算法（Batched Join）来处理连接操作；</li>
+<li>Using index condition：表示 MySQL 服务器需要使用索引条件过滤数据；</li>
+<li>Using where; Using index：表示 MySQL 服务器需要在存储引擎层使用 WHERE 条件过滤数据，并使用覆盖索引来避免回表查询；</li>
+<li>Using where; Using index; Using join buffer (Block Nested Loop)：表示 MySQL 服务器需要在存储引擎层使用 WHERE 条件过滤数据，并使用索引和块嵌套循环算法来处理连接操作。</li>
+</ul>
+<p>需要注意的是，Extra 列中的值不一定是唯一的，例如一个查询语句可能会同时使用多个策略来处理查询，那么 Extra 列中会列出所有的策略。</p>
+<p>对于优化查询语句，特别是对于大型复杂的查询，我们需要深入理解 EXPLAIN 命令输出的信息，特别是 Extra 列中的信息，以帮助我们理解查询语句的执行计划，发现查询语句中的性能问题，及时进行调整和优化。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+              <a href="/tags/chatGPT/" rel="tag"># chatGPT</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/27/%E5%9F%BA%E4%BA%8Edocker-compose%E9%83%A8%E7%BD%B2mysql/" rel="prev" title="基于docker-compose部署mysql">
+                  <i class="fa fa-angle-left"></i> 基于docker-compose部署mysql
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/06/%E7%BB%A7%E7%BB%AD%E6%8B%B7%E6%89%93ChatGPT%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B4%A2%E5%BC%95/" rel="next" title="继续拷打ChatGPT关于如何建立字符串索引">
+                  继续拷打ChatGPT关于如何建立字符串索引 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Yellow</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rosinanteplusssss.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="DevOps实践指南Gene Kim  Jez Humble  Patrick Debois  John Willis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信读书《DevOps实践指南》笔记导出">
+<meta property="og:url" content="https://rosinanteplusssss.github.io/2022/11/21/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6%E3%80%8ADevOps%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97%E3%80%8B%E7%AC%94%E8%AE%B0%E5%AF%BC%E5%87%BA/index.html">
+<meta property="og:site_name" content="日復一日">
+<meta property="og:description" content="DevOps实践指南Gene Kim  Jez Humble  Patrick Debois  John Willis">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-21T09:40:57.000Z">
+<meta property="article:modified_time" content="2022-11-22T09:27:53.796Z">
+<meta property="article:author" content="Yellow">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="读书">
+<meta property="article:tag" content="微信读书">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rosinanteplusssss.github.io/2022/11/21/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6%E3%80%8ADevOps%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97%E3%80%8B%E7%AC%94%E8%AE%B0%E5%AF%BC%E5%87%BA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rosinanteplusssss.github.io/2022/11/21/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6%E3%80%8ADevOps%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97%E3%80%8B%E7%AC%94%E8%AE%B0%E5%AF%BC%E5%87%BA/","path":"2022/11/21/微信读书《DevOps实践指南》笔记导出/","title":"微信读书《DevOps实践指南》笔记导出"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>微信读书《DevOps实践指南》笔记导出 | 日復一日</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">日復一日</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">當一個堅持的人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-%E6%95%8F%E6%8D%B7%E3%80%81%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E5%92%8C%E4%B8%89%E6%AD%A5%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">第1章 敏捷、持续交付和三步法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%B5%81%E5%8A%A8%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">第2章 第一步：流动原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%8F%8D%E9%A6%88%E5%8E%9F%E5%88%99"><span class="nav-number">4.</span> <span class="nav-text">第3章 第二步：反馈原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%8E%9F%E5%88%99"><span class="nav-number">5.</span> <span class="nav-text">第4章 第三步：持续学习与实验原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-%E7%90%86%E8%A7%A3%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96%E5%92%8C%E8%BF%90%E7%94%A8%E4%BB%B7%E5%80%BC%E6%B5%81"><span class="nav-number">6.</span> <span class="nav-text">第6章 理解、可视化和运用价值流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC7%E7%AB%A0-%E5%8F%82%E8%80%83%E5%BA%B7%E5%A8%81%E5%AE%9A%E5%BE%8B%E8%AE%BE%E8%AE%A1%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="nav-number">7.</span> <span class="nav-text">第7章 参考康威定律设计组织结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC10%E7%AB%A0-%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%8F%AF%E9%9D%A0%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">8.</span> <span class="nav-text">第10章 实现快速可靠的自动化测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC11%E7%AB%A0-%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E8%B7%B5%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90"><span class="nav-number">9.</span> <span class="nav-text">第11章 应用和实践持续集成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC13%E7%AB%A0-%E9%99%8D%E4%BD%8E%E5%8F%91%E5%B8%83%E9%A3%8E%E9%99%A9%E7%9A%84%E6%9E%B6%E6%9E%84"><span class="nav-number">10.</span> <span class="nav-text">第13章 降低发布风险的架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC14%E7%AB%A0-%E5%BB%BA%E7%AB%8B%E8%83%BD%E5%8F%91%E7%8E%B0%E5%B9%B6%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%9A%84%E9%81%A5%E6%B5%8B%E7%B3%BB%E7%BB%9F"><span class="nav-number">11.</span> <span class="nav-text">第14章 建立能发现并解决问题的遥测系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC15%E7%AB%A0-%E5%88%86%E6%9E%90%E9%81%A5%E6%B5%8B%E6%95%B0%E6%8D%AE%E4%BB%A5%E6%9B%B4%E5%A5%BD%E5%9C%B0%E9%A2%84%E6%B5%8B%E6%95%85%E9%9A%9C%E5%92%8C%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87"><span class="nav-number">12.</span> <span class="nav-text">第15章 分析遥测数据以更好地预测故障和实现目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC16%E7%AB%A0-%E5%BA%94%E7%94%A8%E5%8F%8D%E9%A6%88%E5%AE%9E%E7%8E%B0%E5%AE%89%E5%85%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">13.</span> <span class="nav-text">第16章 应用反馈实现安全部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC18%E7%AB%A0-%E5%BB%BA%E7%AB%8B%E8%AF%84%E5%AE%A1%E5%92%8C%E5%8D%8F%E4%BD%9C%E6%B5%81%E7%A8%8B%E4%BB%A5%E6%8F%90%E5%8D%87%E5%BD%93%E5%89%8D%E5%B7%A5%E4%BD%9C%E7%9A%84%E8%B4%A8%E9%87%8F"><span class="nav-number">14.</span> <span class="nav-text">第18章 建立评审和协作流程以提升当前工作的质量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC19%E7%AB%A0-%E5%B0%86%E5%AD%A6%E4%B9%A0%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8%E5%B7%A5%E4%BD%9C"><span class="nav-number">15.</span> <span class="nav-text">第19章 将学习融入日常工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC20%E7%AB%A0-%E5%B0%86%E5%B1%80%E9%83%A8%E7%BB%8F%E9%AA%8C%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%85%A8%E5%B1%80%E6%94%B9%E8%BF%9B"><span class="nav-number">16.</span> <span class="nav-text">第20章 将局部经验转化为全局改进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC21%E7%AB%A0-%E9%A2%84%E7%95%99%E7%BB%84%E7%BB%87%E5%AD%A6%E4%B9%A0%E5%92%8C%E6%94%B9%E8%BF%9B%E7%9A%84%E6%97%B6%E9%97%B4"><span class="nav-number">17.</span> <span class="nav-text">第21章 预留组织学习和改进的时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%8C%E5%8A%A8%E8%B5%B7%E6%9D%A5%E2%80%94%E2%80%94%E6%9C%AC%E4%B9%A6%E6%80%BB%E7%BB%93"><span class="nav-number">18.</span> <span class="nav-text">行动起来——本书总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yellow</p>
+  <div class="site-description" itemprop="description">碼農</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rosinanteplusssss.github.io/2022/11/21/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6%E3%80%8ADevOps%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97%E3%80%8B%E7%AC%94%E8%AE%B0%E5%AF%BC%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yellow">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日復一日">
+      <meta itemprop="description" content="碼農">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="微信读书《DevOps实践指南》笔记导出 | 日復一日">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          微信读书《DevOps实践指南》笔记导出
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-21 17:40:57" itemprop="dateCreated datePublished" datetime="2022-11-21T17:40:57+08:00">2022-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-22 17:27:53" itemprop="dateModified" datetime="2022-11-22T17:27:53+08:00">2022-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">读书</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>DevOps实践指南<br>Gene Kim  Jez Humble  Patrick Debois  John Willis</p>
+<span id="more"></span>
+
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ol>
+<li><a href="#org58a29a2">第1章 敏捷、持续交付和三步法</a></li>
+<li><a href="#org49a352f">第2章 第一步：流动原则</a></li>
+<li><a href="#org781c81b">第3章 第二步：反馈原则</a></li>
+<li><a href="#org8f92a62">第4章 第三步：持续学习与实验原则</a></li>
+<li><a href="#org72e3b0d">第6章 理解、可视化和运用价值流</a></li>
+<li><a href="#org1958719">第7章 参考康威定律设计组织结构</a></li>
+<li><a href="#orga137cfa">第10章 实现快速可靠的自动化测试</a></li>
+<li><a href="#orgf323583">第11章 应用和实践持续集成</a></li>
+<li><a href="#org4f0949a">第13章 降低发布风险的架构</a></li>
+<li><a href="#org1cf3dd4">第14章 建立能发现并解决问题的遥测系统</a></li>
+<li><a href="#orgea3dde6">第15章 分析遥测数据以更好地预测故障和实现目标</a></li>
+<li><a href="#org4664a23">第16章 应用反馈实现安全部署</a></li>
+<li><a href="#org31f67d1">第18章 建立评审和协作流程以提升当前工作的质量</a></li>
+<li><a href="#org91ea762">第19章 将学习融入日常工作</a></li>
+<li><a href="#orgdc23784">第20章 将局部经验转化为全局改进</a></li>
+<li><a href="#orgedc7b8b">第21章 预留组织学习和改进的时间</a></li>
+<li><a href="#org4a89fc5">行动起来——本书总结</a></li>
+</ol>
+<p><a id="org58a29a2"></a></p>
+<h1 id="第1章-敏捷、持续交付和三步法"><a href="#第1章-敏捷、持续交付和三步法" class="headerlink" title="第1章 敏捷、持续交付和三步法"></a>第1章 敏捷、持续交付和三步法</h1><ul>
+<li><p>价值流定义为“一个组织基于客户的需求所执行的一系列有序的交付活动”，或者是“为了给客户设计、生产和提供产品或服务所需从事的一系列活动，它包含了信息流和物料流的双重价值”。</p>
+</li>
+<li><p>在DevOps中，我们通常将技术价值流定义为“把业务构想转化为向客户交付价值的、由技术驱动的服务所需要的流程”。</p>
+</li>
+<li><p>我们的目标是采用测试和运维与设计和开发同步的模式，从而产生更快的价值流和更高的质量。只有当工作任务是小批量的，并将质量内建到价值流的每个部分时，这种同步的模式才能实现。</p>
+</li>
+<li><p>在DevOps的理想情况下，开发人员能快速、持续地获得工作反馈，能快速和独立地开发、集成和验证代码，并能将代码部署到生产环境中（自己部署或者他人部署）。</p>
+</li>
+<li><p>我们可以通过如下方式达到这个目标：向版本控制系统中持续不断地提交小批量的代码变更，并对代码做自动化测试和探索测试，然后再将它部署到生产环境中。</p>
+</li>
+<li><p>为了更容易地实现上述目标，还需要通过模块化、高内聚、低耦合的方式优化架构设计，帮助小型团队自治地工作。这样即便失败了，也能在可控范围内，而不至于对全局产生影响。</p>
+</li>
+</ul>
+<p><a id="org49a352f"></a></p>
+<h1 id="第2章-第一步：流动原则"><a href="#第2章-第一步：流动原则" class="headerlink" title="第2章 第一步：流动原则"></a>第2章 第一步：流动原则</h1><ul>
+<li><p>通过持续加强工作内容的可视化，减小每批次大小和等待间隔，内建质量以防止缺陷向下游传递，从而增强流动性。</p>
+</li>
+<li><p>我们的目标是在缩短代码从变更到生产环境上线所需时间的同时，提高服务的质量和可靠性。</p>
+</li>
+<li><p>研究表明，即便是完成简单任务，如将各种几何形状分类，当同时执行多个任务时，效率也会显著降低。从认知上看，技术价值流中的工作，显然要比分类几何形状复杂得多，所以多任务会导致更长的处理时间。</p>
+</li>
+<li><p>实际上，糟糕的多任务处理发生的原因，通常是同时给一个人分配多个项目，造成了很多优先级冲突问题。</p>
+</li>
+<li><p>“停止开始，开始结束。”</p>
+</li>
+<li><p>理论上，最小的批量是单件流，也就是每次操作只执行一个单位产品的处理。[插图]</p>
+</li>
+<li><p>为了减少这类问题的出现，要么努力减少交接次数，要么用自动化方式执行大部分操作，要么重新调整组织结构，让团队不必依赖其他人就可以独立地为客户提供价值。因此，要通过减少队列中的等待时间以及非增值工作的时间来增加流动性</p>
+</li>
+<li><p>他定义了制造业里7种主要的浪费类型：库存、过量生产、过度加工、运输、等待、移动和缺陷。</p>
+</li>
+</ul>
+<p><a id="org781c81b"></a></p>
+<h1 id="第3章-第二步：反馈原则"><a href="#第3章-第二步：反馈原则" class="headerlink" title="第3章 第二步：反馈原则"></a>第3章 第二步：反馈原则</h1><ul>
+<li><p>在安全的工作系统中，我们要不断地对设计和假设进行验证。目标是更早、更快、以尽可能低的成本、从尽可能多的维度增加系统的信息流，并尽可能清晰地确定问题的前因后果。能排除的假设越多，定位和解决问题的速度就越快，从而提高我们的顺应力、敏捷性以及学习和创新能力。</p>
+</li>
+<li><p>群策群力的目的是遏制住问题，防止蔓延，然后定位和处理问题，避免复发。他说：“这样做可以让所有参与者都得到更深入的知识，理解如何管理系统，把无法规避的、早期的无知阶段变成学习的过程。</p>
+</li>
+<li><p>当有人因为6个月前开发人员所造成的事故而对着他们咆哮时，开发人员其实学不到任何东西——这就是我们必须尽可能快地（几分钟之后，而不是几个月后）向所有人提供反馈的原因。</p>
+</li>
+</ul>
+<p><a id="org8f92a62"></a></p>
+<h1 id="第4章-第三步：持续学习与实验原则"><a href="#第4章-第三步：持续学习与实验原则" class="headerlink" title="第4章 第三步：持续学习与实验原则"></a>第4章 第三步：持续学习与实验原则</h1><ul>
+<li><p>技术价值流的核心是建立高度信任的文化。</p>
+</li>
+<li><p>“比日常工作更重要的，是对日常工作的持续改进。”</p>
+</li>
+<li><p>类似地，对于技术价值流而言，让工作系统更加安全也一样有助于发现和解决潜在风险。例如，一开始我们可能只是对影响客户服务的事故做不指责的事后调查，随着时间的推移，我们将逐渐地识别其他潜在风险。</p>
+</li>
+<li><p>领导者可以使用下列问题来帮助和辅导实验者。</p>
+<ul>
+<li>上一步做了什么？发生了什么？</li>
+<li>你从中学到了什么？</li>
+<li>现状如何？</li>
+<li>下一个目标条件是什么？</li>
+<li>当前工作有什么阻碍？</li>
+<li>下一步做什么？</li>
+<li>期望的结果是什么？</li>
+<li>什么时候能进行复查？</li>
+</ul>
+</li>
+</ul>
+<p><a id="org72e3b0d"></a></p>
+<h1 id="第6章-理解、可视化和运用价值流"><a href="#第6章-理解、可视化和运用价值流" class="headerlink" title="第6章 理解、可视化和运用价值流"></a>第6章 理解、可视化和运用价值流</h1><ul>
+<li><p>Courtney Kissler和同事根据多年的经验总结出一个开始优化价值流的有效方法，就是和所有核心干系人一起演练价值流映射，从而帮助团队梳理出创造价值的所有步骤（本章后面会介绍这个演练过程）。</p>
+</li>
+<li><p>在任何DevOps转型项目中，都需要保持小跨度的改进计划，正如创业公司做产品开发或客户开发一样。应该努力在数周内（最差也应该在数月内）获得可度量的改进成果或者可用的数据。</p>
+</li>
+<li><p>通过缩短计划跨度和迭代间隔，可以做到以下几点：</p>
+<ul>
+<li>具备重新计划和更改优先级的能力和灵活性；</li>
+<li>减少工作从实施到生效的延迟时间，从而加强反馈回路，这将更有可能强化期望的行为——初步成功有利于加大投入；</li>
+<li>从迭代中更快地获得经验，并将其用于下一次迭代；</li>
+<li>能够更省力地获得改进；</li>
+<li>在日常工作中更快地实现有意义的差异化改进；</li>
+<li>降低项目还没有取得成果就被终止的风险。</li>
+</ul>
+</li>
+<li><p>建立机制并允许团队成员互相帮助，甚至帮助其他团队的成员。</p>
+</li>
+<li><p>针对Nordstrom和LinkedIn的案例研究表明，通过在价值流中发现问题并持续偿还技术债务，前置时间和质量等各个方面都能取得显著改善。</p>
+</li>
+</ul>
+<p><a id="org1958719"></a></p>
+<h1 id="第7章-参考康威定律设计组织结构"><a href="#第7章-参考康威定律设计组织结构" class="headerlink" title="第7章 参考康威定律设计组织结构"></a>第7章 参考康威定律设计组织结构</h1><ul>
+<li><p>通过这样做，所有构建服务的人都对自己在上游所负责的架构和代码有了亲身的感受，这对下游的工作产生了巨大的积极影响。</p>
+</li>
+<li><p>想法：同时也能了解或者理解同事在做什么、怎么做和做这件事情的难度以及花费的时间和精力。</p>
+<ul>
+<li>“多技能交叉培训非常有利于员工的职业发展，也能让所有员工的工作变得更有意思”。</li>
+</ul>
+</li>
+<li><p>“多技能交叉培训非常有利于员工的职业发展，也能让所有员工的工作变得更有意思”。</p>
+</li>
+<li><p>想法：丧失了完成目标的成就感</p>
+<ul>
+<li>在传统的开发模型中，开发团队和测试团队被分配到某一个项目中；当项目完成或资金耗尽后，团队解散，他们又被重新分配到另一个项目中。这种方式导致很多不尽如人意的结果，包括开发人员无法看到他们所做决策的长期效果（一种反馈形式），以及投资模式只注重和支付软件生命周期的初始阶段（不幸的是，对于成功的产品或服务而言，初始阶段是成本最低的阶段）。</li>
+</ul>
+</li>
+</ul>
+<p><a id="orga137cfa"></a></p>
+<h1 id="第10章-实现快速可靠的自动化测试"><a href="#第10章-实现快速可靠的自动化测试" class="headerlink" title="第10章 实现快速可靠的自动化测试"></a>第10章 实现快速可靠的自动化测试</h1><ul>
+<li>我们的目标是让开发人员在日常工作中创建自动化测试套件，并在开发早期就保证产品质量。这样做有利于建立快速的反馈回路，帮助开发人员尽早发现问题，并在约束（例如时间和资源）最少时快速解决问题。</li>
+</ul>
+<p><a id="orgf323583"></a></p>
+<h1 id="第11章-应用和实践持续集成"><a href="#第11章-应用和实践持续集成" class="headerlink" title="第11章 应用和实践持续集成"></a>第11章 应用和实践持续集成</h1><ul>
+<li><p>自动化测试实践，用以保障开发人员快速获得工作质量的反馈。当开发人员的数量和版本控制系统中的分支个数增加时，自动化测试会变得更加重要。</p>
+</li>
+<li><p>每日提交代码，也迫使开发人员进一步分解工作，同时保持主干处于可发布状态。</p>
+</li>
+<li><p>想法：这就相当于在运维中开发一样，一旦需要对别人负责就需要花费更多精力在代码的可靠性上下功夫，从而减少bug和懈怠率。 </p>
+<ul>
+<li>基于主干的开发方式可能是本书中最具争议的实践。许多工程师都认为它行不通，他们更喜欢在自己的分支上工作，不必与其他开发人员协作。然而，Puppet Labs的《2015年DevOps现状报告》表明，基于主干的开发方式能带来更高的生产力、更好的稳定性，甚至更高的工作满意度和更低的职业倦怠率。</li>
+</ul>
+</li>
+</ul>
+<p><a id="org4f0949a"></a></p>
+<h1 id="第13章-降低发布风险的架构"><a href="#第13章-降低发布风险的架构" class="headerlink" title="第13章 降低发布风险的架构"></a>第13章 降低发布风险的架构</h1><ul>
+<li><p>Randy Shoup的团队在eBay做了教科书式的架构设计演进。他们采用了绞杀者应用（strangler application）模式，而不是在无法继续满足组织目标的架构上直接“剥离和替换”旧服务。首先将已有功能用API封装起来，避免对它们做变更；然后在使用新架构的新服务中实现所有的新功能，只有在必要的时候才调用旧系统的API。</p>
+</li>
+<li><p>他的团队通过创建所谓的“构建模块”来实现这一点。“构建模块”使开发人员可以工作在独立的模块中，这些模块是从单体应用的代码库中解耦出来的，并通过固定的API进行访问。这使团队能够更自主地工作，而不必与其他开发团队不断沟通和协调。</p>
+</li>
+<li><p>在第三部分中，我们实现了使工作从开发到运维快速流动的架构和技术实践，从而快速、安全地向客户交付价值。</p>
+</li>
+</ul>
+<p><a id="org1cf3dd4"></a></p>
+<h1 id="第14章-建立能发现并解决问题的遥测系统"><a href="#第14章-建立能发现并解决问题的遥测系统" class="headerlink" title="第14章 建立能发现并解决问题的遥测系统"></a>第14章 建立能发现并解决问题的遥测系统</h1><ul>
+<li><p>为了帮助确保拥有与服务可靠性和安全操作相关的信息，我们应该保证所有潜在的重大应用事件都生成日志记录条目，包括高德纳公司GTP安全和风险管理小组的研究副总裁Anton A. Chuvakin编写的以下清单：</p>
+<ul>
+<li>认证&#x2F;授权的结果（包括退出）；</li>
+<li>系统和数据的访问；- 系统和应用程序的变更（特别是特权变更）；</li>
+<li>数据的变更，例如增加、修改或删除数据；- 无效输入（可能的恶意注入、威胁等）；</li>
+<li>资源（内存、磁盘、中央处理器、带宽或其他任何具有硬&#x2F;软限制的资源）；</li>
+<li>健康度和可用性；</li>
+<li>启动和关闭；</li>
+<li>故障和错误；</li>
+<li>断路器跳闸；</li>
+<li>延迟；</li>
+<li>备份成功&#x2F;失败。为了更容易地解释和给出所有日志条目的意义，（理想情况下）我们应该对日志记录进行分级和分类，比如对非功能属性（如性能、安全性）和功能属性（如搜索、排行）。</li>
+</ul>
+</li>
+<li><p>通过将创建生产环境度量指标作为日常工作的一部分，不但可以及时地捕获问题，而且还可以在设计和运维过程中不断暴露问题，从而能跟踪越来越多的指标，就像Etsy的案例研究中那样。</p>
+</li>
+<li><p>此外，在每次生产故障之后，我们应该识别是否存在遥测盲区，弥补它们就能更快地发现故障和恢复服务。更好的做法是，在功能开发阶段，在同行评审的过程中就能识别出这些盲区。</p>
+</li>
+</ul>
+<p><a id="orgea3dde6"></a></p>
+<h1 id="第15章-分析遥测数据以更好地预测故障和实现目标"><a href="#第15章-分析遥测数据以更好地预测故障和实现目标" class="headerlink" title="第15章 分析遥测数据以更好地预测故障和实现目标"></a>第15章 分析遥测数据以更好地预测故障和实现目标</h1><ul>
+<li><p>利用这些技术来保持员工的理智</p>
+</li>
+<li><p>想法：设置一个阈值，当资源占用变高、方法或者语句执行过久和消息积压开始变多的时候就可以告警了。</p>
+<ul>
+<li>“当人们问我需要监控哪些对象时，我开玩笑说，在理想的世界里，我们会删除目前监控系统里所有的告警。然后，在每一个用户业务中断以后，我们会问什么指标能预测这个中断，然后再把这些指标加入到监控系统中，并根据需要告警，再不断重复上面这一过程。这样，我们就只会收到预防中断的告警，而不是在故障发生以后遭到报警信息的轰炸。”</li>
+</ul>
+</li>
+<li><p>遥测的一些指标。例如：</p>
+<ul>
+<li>应用级别——网页加载时间正在增加等；</li>
+<li>操作系统级别——服务器闲置内存不足、磁盘空间不足等；</li>
+<li>数据库级别——数据库事务处理时间超出正常值等；</li>
+<li>网络级别——负载均衡器背后运行的服务器数量下降等。</li>
+</ul>
+</li>
+<li><p>Netflix如何利用这些技术主动地在生产环境中移除计算服务器，以实现自动扩展的基础架构。</p>
+</li>
+</ul>
+<p><a id="org4664a23"></a></p>
+<h1 id="第16章-应用反馈实现安全部署"><a href="#第16章-应用反馈实现安全部署" class="headerlink" title="第16章 应用反馈实现安全部署"></a>第16章 应用反馈实现安全部署</h1><ul>
+<li><p>具有讽刺意味的是，开发人员经常抱怨运维人员不敢部署代码。但当开发人员也拥有了部署代码的权力时，他们自己也开始害怕部署代码了。</p>
+</li>
+<li><p>虽然前向修复通常是危险的，但是当拥有了自动化测试、快速部署流水线以及全面的遥测之后，我们就可以快速地确认生产环境中的一切是否正常运行，这样其实是非常安全的。</p>
+</li>
+<li><p>想法：能不快吗？着急睡觉呢。</p>
+<ul>
+<li>“我们发现，当凌晨2点请开发人员上线一起修复故障时，问题解决的速度要比以前快得多。”</li>
+</ul>
+</li>
+<li><p>以上实践还帮助开发管理人员意识到，每一项产品功能都标记为“完成”并不代表业务目标已经实现。相反，所有功能都在生产环境中按照设计正常地运行，没有引起重大的故障，也没有引发计划外的运维或开发工作，才是真的“完成”。</p>
+</li>
+<li><p>“在我们的团队中，大多数系统管理员只工作6个月。生产环境中总是发生故障，那些时刻太让人抓狂了，部署应用程序的痛苦简直让人难以置信。最糟糕的是配置应用程序服务器集群，整整花了我们6个小时。我们无时无刻不在想：这些开发人员是故意整蛊我们。”</p>
+</li>
+<li><p>服务发布指南和要求可能包括以下内容。  </p>
+<ul>
+<li>缺陷计数和严重性：应用程序是按设计运行的吗？</li>
+<li>告警的类型&#x2F;频率：在生产环境中应用程序所产生的告警数量是否太多，无法得到支持？</li>
+<li>监控覆盖率：监控覆盖的范围是否够大，能够为恢复故障服务提供足够的信息？- 系统架构：服务松耦合的程度是否足以支持生产环境中高频率的变更和部署？- 部署过程：在生产环境中代码部署的过程是不是可预测的、确定性的和足够自动化的？- 生产环境的整洁：是否有迹象表明生产习惯已经足够好，可以让其他任何人提供生产支持？</li>
+</ul>
+</li>
+</ul>
+<p><a id="org31f67d1"></a></p>
+<h1 id="第18章-建立评审和协作流程以提升当前工作的质量"><a href="#第18章-建立评审和协作流程以提升当前工作的质量" class="headerlink" title="第18章 建立评审和协作流程以提升当前工作的质量"></a>第18章 建立评审和协作流程以提升当前工作的质量</h1><ul>
+<li><p>丰田生产系统的核心理念之一是“最了解问题的人通常是离问题最近的人”</p>
+</li>
+<li><p>就像之前就已经证明过的一样，开展工作的人（即变更实施者）和决定做这项工作的人（即变更授权人）之间的距离越远，审批流程的结果就越差。</p>
+</li>
+<li><p>保持小批量尺寸的原则也适用于代码评审。变更的批量越大，评审工程师理解这些工作需要花费的时间就越长，他们的负担也越大。</p>
+</li>
+<li><p>“请程序员来审查10行代码，他会找到10个问题。请他审查500行代码，他会说看起来都不错。”</p>
+</li>
+<li><p>本章讨论了一些要整合到日常工作中的技术实践，它们能够提高变更的质量，降低部署出错的风险，减少对审批流程的依赖。</p>
+</li>
+</ul>
+<p><a id="org91ea762"></a></p>
+<h1 id="第19章-将学习融入日常工作"><a href="#第19章-将学习融入日常工作" class="headerlink" title="第19章 将学习融入日常工作"></a>第19章 将学习融入日常工作</h1><ul>
+<li><p>为了在复杂系统中安全地工作，组织一定要能够进行更好的自我诊断和自我改进，而且必须熟练地发现和解决问题，并通过在整个组织中传播解决方案来扩大效果。这种方式会创造出一个动态的学习系统，让我们理解错误，并将理解转化为防止这些错误复发的行动。</p>
+</li>
+<li><p>作为替代，Netflix每个功能和组件都设计为具有完全降级的能力。例如，当流量剧增造成了CPU使用率暴涨的时候，就不向用户显示个性化的电影推荐列表，而是只显示已经缓存的静态内容，从而减少计算资源的需求。</p>
+</li>
+<li><p>此外，这篇博客文章还解释，除了实施这些架构模式，他们还构建并运行了一个令人吃惊的大胆服务，称为“捣乱猴”（Chaos Monkey）。它会不断地随机删除生产服务器，来模拟AWS环境故障。他们这样做是希望所有的“工程团队习惯于在常规的故障水平上工作”，使得服务能够“在没有任何人工干预的情况下，自动恢复正常”。</p>
+</li>
+<li><p>这个故事还展示了学习型组织是如何思考故障、事故和错误的——将其视为学习的机遇，而不是惩罚的机会。</p>
+</li>
+<li><p>想法：甚至如果惩罚严重了，人们会开始掩盖小的问题，直到出现了无法挽救的大问题。</p>
+<ul>
+<li>当工程师犯错误时，如果可以有安全感地给出详细信息，那么他们不仅愿意对事情负责，而且会热情地帮助其他人避免同样的错误发生。这就创造了组织学习。与之相反，如果惩罚那个工程师，每个人都没有了提供必要细节的积极性，想了解故障的机制、原理和操作就无从谈起了，那么这个故障肯定还会再次发生。</li>
+</ul>
+</li>
+<li><p>为了有助于建立公正文化，当事故和重大事件发生时（例如，部署失败，影响到客户的生产事件），应该在问题解决以后进行不指责的事后分析。注6这个词是John Allspaw提出的，可以帮助我们检查“不只是事故本身，而且关注事故发生的机制和情景，以及事故相关人的决策过程”</p>
+</li>
+<li><p>召开不指责的事后分析会议时，首要任务是梳理所有相关事件的时间表并将对其的最佳理解记录下来。这包括采取的所有行动及其时间（理想情况下，通过查阅聊天日志获取，如IRC或Slack），观察到的现象（理想情况下，按照生产环境遥测系统里的具体监控指标，而不仅仅是人们的主观叙述），经历的所有调查路径，以及曾经考虑到的各种解决方案。</p>
+</li>
+<li><p>在会议和决议的过程中，应该明确禁止使用“原来应该”或“原本可以”等词语，因为它们是反事实的陈述，源于人类倾向于为已经发生的事件创造可能的选择。例如“我原本可以……”或“如果我知道这一点，就应该……”的反事实陈述都是用想象的方式来定义问题，而不是以事实为依据。我们要限制自己使用这样的语境（见附录8）。</p>
+</li>
+<li><p>这些应对措施的范例包括：新增能检测部署流水线异常状况的自动化测试，添加更深入的生产环境遥测指标，识别需要额外同行评审的变更类型，以及在定期的演练日里进行针对此类故障的演习。</p>
+</li>
+<li><p>想法：这也可以成为新同事的学习资料。</p>
+<ul>
+<li>开完不指责的事后分析会议以后，应该广泛地公开会议记录和所有相关文档资料（例如，时间表、IRC聊天日志、外部沟通）。在理想情况下，公开的信息应该放在一个集中的位置，方便整个组织里的所有人访问，从过去的事故中学习。事后分析会议非常重要，我们甚至可以将完成事后分析会议作为整个生产事故处理过程结束的标志。</li>
+</ul>
+</li>
+<li><p>“在谷歌，你能想到的一切都可以搜索出来。谷歌员工可以看到所有的事后分析文档。相信我，每当有团队遇到似曾相识的事故，他们第一时间阅读和研究的资料就包括这些事后分析文档。”</p>
+</li>
+<li><p>正如Krishnan所写，“测试中一个经常被忽略的领域是业务流程和通信。系统和流程是高度纠缠在一起的，把对系统的测试和对业务流程的测试隔离开来是不现实的：业务系统中的一个故障会影响到业务流程；反过来，正常运行的系统离开恰当的人员也不会太有用”。</p>
+</li>
+</ul>
+<p><a id="orgdc23784"></a></p>
+<h1 id="第20章-将局部经验转化为全局改进"><a href="#第20章-将局部经验转化为全局改进" class="headerlink" title="第20章 将局部经验转化为全局改进"></a>第20章 将局部经验转化为全局改进</h1><ul>
+<li>GitHub的Hubot能够触发各种自动化工具，包括Puppet、Capistrano、Jenkins、Resque（一个Redis维护的、创建后台作业队列的库）和GraphMe（从Graphite生成图形）。</li>
+</ul>
+<p><a id="orgedc7b8b"></a></p>
+<h1 id="第21章-预留组织学习和改进的时间"><a href="#第21章-预留组织学习和改进的时间" class="headerlink" title="第21章 预留组织学习和改进的时间"></a>第21章 预留组织学习和改进的时间</h1><ul>
+<li><p>我们在这些闪电战期间的目标不是简单地为了测试新技术而进行实验和创新，而是改进日常工作，如找出日常工作中的变通方案。虽然实验也会带来一定的改进，但是改善闪电战的重点是解决日常工作中遇到的具体问题。</p>
+</li>
+<li><p>不论是通过传统的说教方式（如上课、培训），还是通过更具实验性或开放式的方法（例如会议、工作坊、指导），动态的学习文化都不仅能为每个人创造学习条件，还能创造教学的机会。我们可以投入专门的组织时间来促进这种教和学。</p>
+</li>
+<li><p>虽然人们学习新东西时可能会觉得害怕、尴尬或羞耻，但其实不必如此。毕竟，我们都是终身学习者，向同行学习是最好的学习方式之一。</p>
+</li>
+<li><p>本章描述了如何建立一系列惯例，来帮助强化终身学习以及重视在日常工作中改进日常工作的文化。具体实现方法是：预留偿还技术债务的时间；创建论坛，使大家能够在组织内部和外部互相学习和指导；通过辅导、咨询，或者仅仅设置一段面谈时间，让专家能够为内部团队提供帮助。通过使所有人都在日常工作中相互学习，我们比在竞争中学到的更多，从而能够赢得市场。与此同时，我们也在帮助彼此激发出人类的全部潜力。</p>
+</li>
+</ul>
+<p><a id="org4a89fc5"></a></p>
+<h1 id="行动起来——本书总结"><a href="#行动起来——本书总结" class="headerlink" title="行动起来——本书总结"></a>行动起来——本书总结</h1><ul>
+<li><p>正如本书一直强调的，若管理不当，开发人员与运维人员之间存在的冲突会日益恶化，导致新产品和功能上线时间长，质量不如人意，损耗增加，技术债越积越多，生产力低下，员工的不满和倦怠情绪也会越来越严重。DevOps的原则和模式能够化解这个核心冲突。</p>
+</li>
+<li><p>DevOps的践行需要新的企业文化和管理规范，同时会变革技术实践和架构。跨部门协作至关重要，包括管理层、产品管理部门、开发团队、质量保证团队、IT运维、信息安全甚至市场营销人员在内，所有部门通力协作，才能有效构建出一个安全的工作系统，从而帮助小团队快速、自主地开发和验证，并安全地部署客户服务相关的代码，也才有可能有技术创新。这种方式可以最大程度地提高开发人员的生产力、学习积极性、满意度以及提高组织赢得市场的能力。</p>
+</li>
+<li><p>尝试的最大意义在于，通过实践鼓舞他人。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag"># 读书</a>
+              <a href="/tags/%E5%BE%AE%E4%BF%A1%E8%AF%BB%E4%B9%A6/" rel="tag"># 微信读书</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/17/%E5%88%86%E5%B8%83%E9%94%81-ConcurrentHashMap%E5%AE%9E%E7%8E%B0/" rel="prev" title="分布锁-ConcurrentHashMap实现">
+                  <i class="fa fa-angle-left"></i> 分布锁-ConcurrentHashMap实现
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/" rel="next" title="Docker搭建redis集群">
+                  Docker搭建redis集群 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Yellow</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
