@@ -26,6 +26,8 @@
 <meta property="og:site_name" content="日復一日">
 <meta property="og:description" content="最近因为一个需要进行字段拼接的显示，所以查了一下oracle可以使用wm_concat()进行操作。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2019/08/23/Oracle%E4%BD%BF%E7%94%A8wm_concat()%E5%81%9A%E5%AD%97%E6%AE%B5%E6%8B%BC%E6%8E%A5/%E6%88%AA%E5%9B%BE1.png">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2019/08/23/Oracle%E4%BD%BF%E7%94%A8wm_concat()%E5%81%9A%E5%AD%97%E6%AE%B5%E6%8B%BC%E6%8E%A5/%E6%88%AA%E5%9B%BE2.png">
 <meta property="article:published_time" content="2019-08-23T09:22:58.000Z">
 <meta property="article:modified_time" content="2019-08-23T10:03:03.329Z">
 <meta property="article:author" content="Yellow">
@@ -33,6 +35,7 @@
 <meta property="article:tag" content="SQL">
 <meta property="article:tag" content="ORACLE">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rosinanteplusssss.github.io/2019/08/23/Oracle%E4%BD%BF%E7%94%A8wm_concat()%E5%81%9A%E5%AD%97%E6%AE%B5%E6%8B%BC%E6%8E%A5/%E6%88%AA%E5%9B%BE1.png">
 
 
 <link rel="canonical" href="https://rosinanteplusssss.github.io/2019/08/23/Oracle%E4%BD%BF%E7%94%A8wm_concat()%E5%81%9A%E5%AD%97%E6%AE%B5%E6%8B%BC%E6%8E%A5/">
@@ -243,10 +246,10 @@
     
     <div class="post-body" itemprop="articleBody"><p>最近因为一个需要进行字段拼接的显示，所以查了一下oracle可以使用wm_concat()进行操作。<span id="more"></span><br>wm_concat（）可以将一个字段的一列拼接用逗号隔开转换成行。</p>
 <p>1.select wm_concat(b.money) as money from bill b</p>
-
+<img src="/2019/08/23/Oracle%E4%BD%BF%E7%94%A8wm_concat()%E5%81%9A%E5%AD%97%E6%AE%B5%E6%8B%BC%E6%8E%A5/%E6%88%AA%E5%9B%BE1.png" class="" title="截图">
 
 <p>2.为了让格式更加优化美观可以使用NVL()进行空值替换，用replace()进行分隔符的替换，如果还有需要的话可以进行分组。<br>select replace(wm_concat(NVL(b.receipt_money, 0)), ‘,’, ‘&#x2F;‘) as money from bill b group by b.name</p>
-
+<img src="/2019/08/23/Oracle%E4%BD%BF%E7%94%A8wm_concat()%E5%81%9A%E5%AD%97%E6%AE%B5%E6%8B%BC%E6%8E%A5/%E6%88%AA%E5%9B%BE2.png" class="" title="截图">
     </div>
 
     

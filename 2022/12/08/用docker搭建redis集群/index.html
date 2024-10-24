@@ -26,12 +26,18 @@
 <meta property="og:site_name" content="日復一日">
 <meta property="og:description" content="旧的服务器过期了，换了一个新的服务器，所以需要重新弄一套redis集群。记录一下操作。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/%E8%8A%82%E7%82%B9%E5%8A%A0%E5%85%A5%E6%88%90%E5%8A%9F.png">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E6%A3%80%E6%9F%A5%E9%9B%86%E7%BE%A4.png">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E9%9B%86%E7%BE%A4%E9%87%8D%E6%96%B0%E5%88%86%E9%85%8D%E6%A7%BD%E5%8F%B7.png">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E9%9B%86%E7%BE%A4%E9%87%8D%E6%96%B0%E5%88%86%E9%85%8D%E6%A7%BD%E5%8F%B7%E6%88%90%E5%8A%9F%E5%90%8E%E4%BF%A1%E6%81%AF.png">
+<meta property="og:image" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%B8%85%E7%A9%BA%E6%A7%BD%E4%BD%8D.png">
 <meta property="article:published_time" content="2022-12-08T09:28:56.000Z">
 <meta property="article:modified_time" content="2022-12-09T09:57:48.808Z">
 <meta property="article:author" content="Yellow">
-<meta property="article:tag" content="Redis">
 <meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/%E8%8A%82%E7%82%B9%E5%8A%A0%E5%85%A5%E6%88%90%E5%8A%9F.png">
 
 
 <link rel="canonical" href="https://rosinanteplusssss.github.io/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/">
@@ -424,20 +430,20 @@ docker run --name redis6-s4  --net host  -v /docker/redis/share/redis6-s4/conf/r
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it redis6-m4</span><br></pre></td></tr></table></figure>
 <p>将新增的6381节点作为master节点加入原集群（需要原集群内的节点作为领路人，7001原集群领路人）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster add-node 192.168.xx.xx:6381 192.168.xx.xx:7001 -a 密码 # 因为设置了集群密码所以需要验证，如果没有设置就不用-a 密码</span><br></pre></td></tr></table></figure>
-
+<img src="/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/%E8%8A%82%E7%82%B9%E5%8A%A0%E5%85%A5%E6%88%90%E5%8A%9F.png" class="" title="节点加入成功">
 
 <p>检查该节点是否加入redis集群</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster check 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
-
+<img src="/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E6%A3%80%E6%9F%A5%E9%9B%86%E7%BE%A4.png" class="" title="检查集群">
 
 <p>重新分配槽号</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster reshard 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
-
+<img src="/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E9%9B%86%E7%BE%A4%E9%87%8D%E6%96%B0%E5%88%86%E9%85%8D%E6%A7%BD%E5%8F%B7.png" class="" title="redis集群重新分配槽号">
 
 <p>分配后检查槽号信息，新分配到的槽号是从前面的几个区间各匀出一点。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster check 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
 
-
+<img src="/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E9%9B%86%E7%BE%A4%E9%87%8D%E6%96%B0%E5%88%86%E9%85%8D%E6%A7%BD%E5%8F%B7%E6%88%90%E5%8A%9F%E5%90%8E%E4%BF%A1%E6%81%AF.png" class="" title="redis集群重新分配槽号成功后信息">
 
 
 <p><a id="org6de6e7e"></a></p>
@@ -449,7 +455,7 @@ docker run --name redis6-s4  --net host  -v /docker/redis/share/redis6-s4/conf/r
 <h2 id="将主节点槽位分配给其他节点"><a href="#将主节点槽位分配给其他节点" class="headerlink" title="将主节点槽位分配给其他节点"></a>将主节点槽位分配给其他节点</h2><p>将主节点6381的槽位分配给7001</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster reshard 192.168.xx.xx:6381 -a 密码</span><br></pre></td></tr></table></figure>
 
-
+<img src="/2022/12/08/%E7%94%A8docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/redis%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%B8%85%E7%A9%BA%E6%A7%BD%E4%BD%8D.png" class="" title="redis集群节点清空槽位">
 
 
 <p>检查是否清空槽位</p>
@@ -477,8 +483,8 @@ redis-cli --cluster del-node 192.168.xx.xx:6381 e9355ad2cfe912af08af4258cf4692fe
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
               <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+              <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
           </div>
 
         
